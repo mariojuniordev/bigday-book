@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { api } from "../../services/api";
+import styled from 'styled-components'
 
+const Container = styled.div`
+  * {
+    display: grid;
+    justify-content: space-between;
+  }
+`
 
 export const Posts = ({ posts }) => {
   const [isCommentsModalOpen, setIsCommentsModalOpen] = useState(false);
@@ -25,7 +32,8 @@ export const Posts = ({ posts }) => {
   return (
     <>
       <ul className="list-group">
-        {posts.map((post) => <li className="list-group-item align-items-center">
+        {posts.map((post) => 
+          <li className="list-group-item align-items-center">
           <h2>User {post.id}</h2>
           <h3>{post.title}</h3>
           <p>{post.body}</p>
@@ -36,21 +44,29 @@ export const Posts = ({ posts }) => {
             <img src="../../assets/bf.png" alt="See Comments..."/>
           </button>
         </li>
-        )}
+        )}        
       </ul>
 
-      <Modal 
-      isOpen={isCommentsModalOpen}
-      onRequestClose={handleCloseCommentsModal}
-      >
-          <h2>Comments</h2>
-          {comments.map((comment) => <li className="list-group-item align-items-center">
-          <h2>User {comment.id}</h2>
-          <h3>{comment.name}</h3>
-          <p>{comment.body}</p>
-        </li>
-        )}
-      </Modal>
+      <Container>
+        <Modal 
+        isOpen={isCommentsModalOpen}
+        onRequestClose={handleCloseCommentsModal}
+        >
+          <button 
+          type="button" 
+          class="btn-close" 
+          aria-label="Close"
+          onClick={handleCloseCommentsModal}
+          ></button>
+            {comments.map((comment) => 
+            <li className="list-group-item align-items-center">
+            <h2>User {comment.id}</h2>
+            <h3>{comment.name}</h3>
+            <p>{comment.body}</p>
+            </li>
+          )}
+        </Modal>
+      </Container>
     </>
     );
 };
