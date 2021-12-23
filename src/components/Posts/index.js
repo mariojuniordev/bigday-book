@@ -4,9 +4,10 @@ import { api } from "../../services/api";
 import styled from 'styled-components'
 
 const Container = styled.div`
-  * {
-    display: grid;
-    justify-content: space-between;
+  .card {
+    width: 18rem;
+    margin: 20px;
+    display: inline-block;
   }
 `
 
@@ -31,23 +32,30 @@ export const Posts = ({ posts }) => {
 
   return (
     <>
-      <ul className="list-group">
-        {posts.map((post) => 
-          <li className="list-group-item align-items-center">
-          <h2>User {post.id}</h2>
-          <h3>{post.title}</h3>
-          <p>{post.body}</p>
-          <button 
-          onClick={handleOpenCommentsModal}
-          class="btn btn-primary" 
-          >
-            <img src="../../assets/bf.png" alt="See Comments..."/>
-          </button>
-        </li>
-        )}        
-      </ul>
-
       <Container>
+          {posts.map((post) => 
+            <>
+            <div className="card">
+              <div className="card-body">
+              <h5 className="card-title">User {post.id}</h5>
+              <img 
+              src="https://getbootstrap.com//docs/4.0/assets/brand/bootstrap-solid.svg"  
+              className="card-img-top" alt="IMG..."
+              />
+              <h5 className="card-title">{post.title}</h5>
+              <p className="card-text">{post.body}</p>
+              <button
+                onClick={handleOpenCommentsModal}
+                class="btn btn-primary"
+              >
+                <img src="" alt="See Comments..." />
+              </button>
+              </div>
+            </div>
+            </>
+          )}  
+      </Container>
+
         <Modal 
         isOpen={isCommentsModalOpen}
         onRequestClose={handleCloseCommentsModal}
@@ -66,7 +74,6 @@ export const Posts = ({ posts }) => {
             </li>
           )}
         </Modal>
-      </Container>
     </>
     );
 };
